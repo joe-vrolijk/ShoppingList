@@ -78,9 +78,22 @@ class MainActivity : AppCompatActivity() {
                     productRepository.insertProduct(product)
                 }
                 getShoppingListFromDatabase()
+                ti_amount.text?.clear()
+                ti_what.text?.clear()
+
             }
         }
     }
+
+    private fun deleteShoppingList(){
+        mainScope.launch {
+            withContext(Dispatchers.IO){
+                productRepository.deleteAllProducts()
+            }
+            getShoppingListFromDatabase()
+        }
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -93,7 +106,10 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_delete_shopping_list -> {
+                deleteShoppingList()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -122,4 +138,5 @@ class MainActivity : AppCompatActivity() {
         }
         return ItemTouchHelper(callback)
     }
+
 }
