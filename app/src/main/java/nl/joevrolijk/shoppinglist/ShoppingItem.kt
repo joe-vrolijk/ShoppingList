@@ -1,3 +1,18 @@
 package nl.joevrolijk.shoppinglist
 
-data class ShoppingItem(var name: String, var amount: String)
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "shoppingItemTable")
+data class ShoppingItem(
+
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    var id: Long? = null,
+
+    @ColumnInfo(name = "name")
+    var name: String,
+
+    @ColumnInfo(name = "amount")
+    var amount: String)
